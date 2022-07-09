@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:app": "npm -w @react/app start",
     "start:be": "npm -w @react/backend start",
-    "dev:be": "npm -w @react/backend start",
+    "dev:be": "npm run -w @react/backend dev",
     "start": "run-p start:app start:be",
     "dev": "run-p start:app dev:be"
   },
