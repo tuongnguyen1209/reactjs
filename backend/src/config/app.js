@@ -8,6 +8,7 @@ const router = require("../routers");
 // configuration app
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 // configuration router
 app.use("/api", router);
