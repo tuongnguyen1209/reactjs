@@ -1,7 +1,7 @@
 import { API_BASE_URL } from '@/config/appConfig'
 import { AUTH_TOKEN } from '@/constants/appConstants'
+import { notification } from 'antd'
 import axios from 'axios'
-import sweetalert2 from 'sweetalert2'
 
 const createAxios = () => {
 	const instance = axios.create({
@@ -30,6 +30,10 @@ const createAxios = () => {
 			return response
 		},
 		(error) => {
+			notification.error({
+				message: `Have some Error`,
+				description: error.message,
+			})
 			Promise.reject(error)
 		}
 	)
