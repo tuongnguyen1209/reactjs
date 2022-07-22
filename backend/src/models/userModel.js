@@ -19,9 +19,6 @@ const UserSchema = new Schema(
       required: [true, "Email is require"],
       unique: true,
     },
-    fullname: {
-      type: String,
-    },
     role: {
       type: String,
       enum: {

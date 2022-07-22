@@ -38,7 +38,7 @@
 		"no-useless-escape": "off",
 		"jsx-a11y/media-has-caption": "off",
 		"import/order": [
-			"error",
+			"off",
 			{
 				"groups": ["builtin", "external", "internal", ["parent", "sibling"]],
 				"pathGroups": [
@@ -56,12 +56,14 @@
 				}
 			}
 		],
-		"import/no-unresolved": [2, { "caseSensitive": false }],
+		"import/no-unresolved": "off",
 		"prettier/prettier": [
 			"error",
 			{
 				"endOfLine": "auto"
 			}
-		]
+		],
+		"import/named": "off",
+		"import/extensions": "off"
 	}
 }

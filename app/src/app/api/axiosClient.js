@@ -1,7 +1,7 @@
-import { API_BASE_URL } from '@/config/appConfig'
-import { AUTH_TOKEN } from '@/constants/appConstants'
 import { notification } from 'antd'
 import axios from 'axios'
+import { API_BASE_URL } from 'src/config/appConfig'
+import { AUTH_TOKEN } from 'src/constants/appConstants'
 
 const createAxios = () => {
 	const instance = axios.create({
