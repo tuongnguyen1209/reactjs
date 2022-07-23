@@ -1,14 +1,17 @@
-import { Button, Image, Layout, Menu, Modal, Space } from 'antd'
+import { ShoppingCartOutlined } from '@ant-design/icons'
+import { Avatar, Badge, Button, Drawer, Dropdown, Image, Layout, Menu, Modal, Space } from 'antd'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { Link, useNavigate } from 'react-router-dom'
+import { authAction } from 'src/app/slices/AuthSlice'
+import CartComponent from 'src/components/CartComponents'
 import LoginComponent from 'src/components/LoginForm'
 import RegisterComponent from 'src/components/RegisterComponent'
 import { APP_MENU_LIST } from 'src/constants/appMenu'
 import { ROUTERS_BASE } from 'src/constants/common'
 import { HeaderAppContainer } from './styled'
-// import Logo from 'src/assets/images/image.svg'
 
 const Logo = () => {
 	return (
@@ -91,9 +94,11 @@ const HeaderApp = () => {
 	const [visibleLoginModal, updateVisibleLoginModal] = useState(false)
 	const [visibleRegisterModal, updateVisibleRegisterModal] = useState(false)
 	const [isResetForm, setIsResetForm] = useState(false)
-	const { user, isLogin } = useSelector((state) => state.auth)
+	const [showCart, setShowCart] = useState(false)
+	const { userData, isLogin } = useSelector((state) => state.auth)
+	const { cart } = useSelector((state) => state.cart)
 
-	console.log(user, isLogin)
+	const dispatch = useDispatch()
 	const getSelect = () => {
 		const item = APP_MENU_LIST.find((e) => e.path !== '/' && location.pathname.includes(e.path))
 		return item?.key || 'home'
@@ -103,6 +108,32 @@ const HeaderApp = () => {
 		updateVisibleRegisterModal(false)
 		updateVisibleLoginModal(true)
 	}
+
+	const menuUser = (
+		<Menu
+			items={[
+				{
+					key: '1',
+					label: <Link to={''}>Trang cá nhân</Link>,
+				},
+				{
+					key: '2',
+					label: (
+						<Link
+							to=""
+							onClick={(e) => {
+								e.preventDefault()
+								dispatch(authAction.logout())
+							}}
+						>
+							Đăng Xuất
+						</Link>
+					),
+				},
+			]}
+		/>
+	)
+
 	return (
 		<HeaderAppContainer>
 			<Layout.Header className="app-header">
@@ -115,13 +146,33 @@ const HeaderApp = () => {
 
 					<div className="nav-right">
 						<Space>
-							<Button type="link" onClick={() => updateVisibleLoginModal(true)}>
-								Đăng nhập
-							</Button>
-							<div>/</div>
-							<Button type="link" onClick={() => updateVisibleRegisterModal(true)}>
-								Đăng Ký
-							</Button>
+							<Badge count={cart?.length || 0}>
+								<Button
+									type="link"
+									size="large"
+									icon={<ShoppingCartOutlined width={20} />}
+									onClick={() => setShowCart(true)}
+								></Button>
+							</Badge>
+							{isLogin ? (
+								<div>
+									<Dropdown overlay={menuUser} trigger={['click']}>
+										<div>
+											<Avatar>{`${userData?.fullname}`.slice(0, 1)}</Avatar> {userData?.fullname}
+										</div>
+									</Dropdown>
+								</div>
+							) : (
+								<Space>
+									<Button type="link" onClick={() => updateVisibleLoginModal(true)}>
+										Đăng nhập
+									</Button>
+									<div>/</div>
+									<Button type="link" onClick={() => updateVisibleRegisterModal(true)}>
+										Đăng Ký
+									</Button>
+								</Space>
+							)}
 						</Space>
 					</div>
 				</div>
@@ -171,6 +222,16 @@ const HeaderApp = () => {
 						onOpenLogin={hanleOpenModalLogin}
 					/>
 				</Modal>
+			</div>
+			<div>
+				<Drawer
+					width={1000}
+					title={'Giỏ hàng của bạn'}
+					visible={showCart}
+					onClose={() => setShowCart(false)}
+				>
+					<CartComponent />
+				</Drawer>
 			</div>
 		</HeaderAppContainer>
 	)

@@ -2,6 +2,7 @@ import { Alert, Button, Col, Divider, Form, Image, Input, Row, Spin } from 'antd
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { LoginACtion } from 'src/app/slices/AuthSlice'
 import { LoginFormContainer } from './styled'
 
 const LoginComponent = ({ onCancel, isReset, onUpdateReset }) => {
@@ -17,8 +18,14 @@ const LoginComponent = ({ onCancel, isReset, onUpdateReset }) => {
 		}
 	}, [isReset])
 
-	const handleOnFinish = async ({ email, password }) => {
-		console.log(email, password)
+	const handleOnFinish = async (data) => {
+		setIsSprinning(true)
+		const rs = await dispatch(LoginACtion(data))
+		if (rs.payload?.data?.token) {
+			onCancel()
+		}
+
+		setIsSprinning(false)
 	}
 
 	const onClose = () => {

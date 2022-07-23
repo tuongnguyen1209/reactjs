@@ -4,14 +4,13 @@ import { AppHomeContainer } from './styled'
 import { Button, Col, Divider, Image, Input, List, Row, Space } from 'antd'
 import banner from 'src/assets/images/banner.png'
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons'
-const data = Array.from({ length: 2 }).map((_, i) => ({
-	href: 'https://ant.design',
-	title: `ant design part ${i}`,
+const data = Array.from({ length: 5 }).map((_, i) => ({
+	href: 'http://khaigiang.vn/blog/cong-nghe-thong-tin/',
+	title: `Bài viết ${i}`,
 	avatar: 'https://joeschmoe.io/api/v1/random',
-	description:
-		'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+	description: 'Bài viết về Công nghệ thông tin',
 	content:
-		'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+		'CNTT hiểu theo nghĩa rộng và tổng quát nhất là việc sử dụng công nghệ hiện đại vào việc tạo ra, lưu trữ, truyền dẫn thông tin, xử lý, khai thác thông tin. .',
 }))
 
 const IconText = ({ icon, text }) => (
@@ -27,7 +26,7 @@ const AppHome = () => {
 				<Row>
 					<Col span={12}>
 						<div className="banner">
-							<h1>Mua bán source code online</h1>
+							<h1>Mua bán template online</h1>
 							<div className="search">
 								<Input.Search size="large" placeholder="Tìm kiếm" />
 							</div>

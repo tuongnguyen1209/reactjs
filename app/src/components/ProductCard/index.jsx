@@ -1,34 +1,31 @@
-import { ShoppingCartOutlined } from '@ant-design/icons'
+import { CloudDownloadOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Image, Row, Space } from 'antd'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { cartAction } from 'src/app/slices/CartSlice'
+import { formatPrice } from 'src/utils/format'
 import { ProductCardContainer } from './styled'
 
 const ProductCard = ({ data }) => {
+	const dispatch = useDispatch()
 	return (
 		<ProductCardContainer>
 			<Card>
 				<Row gutter={20}>
 					<Col style={{ marginTop: '.5rem' }} span={8}>
-						<Image alt="result card" src={data?.img} />
+						<Image alt="result card" src={data?.image} />
 					</Col>
 					<Col span={12}>
 						<div style={{ fontWeight: 'bold', fontSize: 18, color: '#001650' }}>{data?.name}</div>
 						<div>
-							<Row style={{ fontSize: 10 }}>
-								<Col span={4}>{data?.author}</Col>
-								<Col span={4}>{data?.version}</Col>
-								<Col span={5}>
-									<Link to={'/'} style={{ fontSize: 10 }} title="View on Youtube" />
-								</Col>
-							</Row>
 							<Row>
 								<Col span={7}>
-									{/* <Image src={rating} alt="rating" /> &nbsp; */}
+									<StarOutlined />
 									{data?.rating}
 								</Col>
 								<Col span={4}>
-									{/* <Image src={download} alt="download" /> */}
+									<CloudDownloadOutlined />
 									&nbsp;{data?.download}
 								</Col>
 								<Col span={5}>
@@ -58,15 +55,24 @@ const ProductCard = ({ data }) => {
 					<Col span={4}>
 						<div style={{ position: 'absolute', bottom: 0, right: 0 }}>
 							<div className="price">
-								<b>${data?.price}</b>
+								<b>{formatPrice(data?.price || 0)}</b>
 							</div>
 							<div>
 								<Space>
-									<Button type="link" size="large">
-										Chi tiết
-									</Button>
+									<Link to={`/product/${data._id}`}>
+										<Button type="primary" size="large">
+											Chi tiết
+										</Button>
+									</Link>
 
-									<Button size="large" danger icon={<ShoppingCartOutlined />} />
+									<Button
+										size="large"
+										danger
+										onClick={() => {
+											dispatch(cartAction.addToCart(data))
+										}}
+										icon={<ShoppingCartOutlined />}
+									/>
 								</Space>
 							</div>
 						</div>

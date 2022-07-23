@@ -11,10 +11,17 @@ const productSchema = new Schema({
     type: String,
     required: [true, "price is require"],
   },
-  category: {
-    type: mongoose.Types.ObjectId,
-    ref: "category",
-  },
+  category: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "category",
+    },
+  ],
+  image: { type: String },
+  rating: Number,
+  listFeature: [String],
+  download: Number,
+  description: String,
   createAt: {
     type: Date,
     default: new Date(),

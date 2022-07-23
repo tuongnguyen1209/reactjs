@@ -1,13 +1,15 @@
 import { Button, Col, Divider, Form, Input, Row, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { SignupACtion } from 'src/app/slices/AuthSlice'
 import { RegisterFormContainer } from './styled'
 
 const RegisterComponent = ({ onCancel, isReset, onUpdateReset, onOpenLogin }) => {
-	const [isSubmit, setIsSubmit] = useState(false)
 	const [form] = Form.useForm()
 	const [field, setField] = useState([{ name: 'email', errors: [] }])
 	const [isSpinning, setIsSprinning] = useState(false)
+	const dispatch = useDispatch()
 
 	const handleOnOpenLogin = () => {
 		if (onOpenLogin) {
@@ -24,7 +26,12 @@ const RegisterComponent = ({ onCancel, isReset, onUpdateReset, onOpenLogin }) =>
 
 	const handleOnFinish = async (value) => {
 		setIsSprinning(true)
-		console.log(value)
+		const rs = await dispatch(SignupACtion(value))
+		console.log(rs)
+		if (rs.payload?.status) {
+			handleOnOpenLogin()
+		}
+
 		setIsSprinning(false)
 	}
 
@@ -41,7 +48,7 @@ const RegisterComponent = ({ onCancel, isReset, onUpdateReset, onOpenLogin }) =>
 						form={form}
 						initialValues={{
 							email: '',
-							username: '',
+							fullname: '',
 							password: '',
 							repassword: '',
 						}}
@@ -64,10 +71,10 @@ const RegisterComponent = ({ onCancel, isReset, onUpdateReset, onOpenLogin }) =>
 							<Input size="large" placeholder="Email" />
 						</Form.Item>
 						<Form.Item
-							name="username"
-							rules={[{ required: true, message: 'Bạn phải nhập username' }]}
+							name="fullname"
+							rules={[{ required: true, message: 'Bạn phải nhập họ tên' }]}
 						>
-							<Input size="large" placeholder="Username" />
+							<Input size="large" placeholder="Họ tên" />
 						</Form.Item>
 						<Form.Item
 							name="password"

@@ -5,10 +5,9 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema(
   {
-    username: {
+    fullname: {
       type: String,
-      required: [true, "username is require"],
-      unique: true,
+      required: [true, "fullname is require"],
     },
     password: {
       type: String,
@@ -43,7 +42,7 @@ const UserSchema = new Schema(
     },
     createBy: {
       type: String,
-      default: "ADMIN",
+      default: "SYSTEM",
     },
   },
   {

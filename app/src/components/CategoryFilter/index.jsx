@@ -8,12 +8,23 @@ const CategoryFilter = ({ categoryList }) => {
 		<CategoryContainer>
 			<div className={'category_filter'}>
 				<h1>Loại</h1>
+				<div className="category_item">
+					<Row gutter={100}>
+						<Col span={12}>
+							<div className="category_name">
+								<Link to={`/product `}>
+									<a>All</a>
+								</Link>
+							</div>
+						</Col>
+					</Row>
+				</div>
 				{categoryList.map((item, index) => (
 					<div className="category_item" key={index}>
 						<Row gutter={100}>
 							<Col span={12}>
 								<div className="category_name">
-									<Link to="/">
+									<Link to={`/product?category=${item._id}`}>
 										<a>{item.name}</a>
 									</Link>
 								</div>
