@@ -25,7 +25,7 @@ exports.getAll = (Model, isPagination = false) =>
 
     response = { ...response, docs };
 
-    res.status(200).json(AppResponse(response));
+    AppResponse(res, response);
   });
 
 exports.getOne = (Model) =>
@@ -34,13 +34,13 @@ exports.getOne = (Model) =>
 
     const doc = await Model.findById(id);
 
-    res.status(200).json(AppResponse(doc));
+    AppResponse(res, doc);
   });
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
-    res.status(201).json(AppResponse(doc));
+    AppResponse(res, doc);
   });
 
 exports.updateOne = (Model) =>
@@ -48,11 +48,11 @@ exports.updateOne = (Model) =>
     const update = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    res.status(200).json(AppResponse(update));
+    AppResponse(res, update);
   });
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     await Model.findByIdAndDelete(req.params.id);
-    res.status(204).json(AppResponse({}));
+    AppResponse(res, {});
   });

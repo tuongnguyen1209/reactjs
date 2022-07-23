@@ -1,12 +1,12 @@
-const ProductModle = require('../models/productModel')
-const ApiFactory = require('../utils/ApiFactory')
+const ProductModle = require("../models/productModel");
+const ApiFactory = require("../utils/ApiFactory");
 
-exports.getAll = ApiFactory.getAll(ProductModle, true)
+exports.getAll = ApiFactory.getAll(ProductModle, false);
 
-exports.getOne = ApiFactory.getOne(ProductModle)
+exports.getOne = ApiFactory.getOne(ProductModle);
 
-exports.create = ApiFactory.createOne(ProductModle)
+exports.create = ApiFactory.createOne(ProductModle);
 
-exports.update = ApiFactory.updateOne(ProductModle)
+exports.update = ApiFactory.updateOne(ProductModle);
 
-exports.delete = ApiFactory.deleteOne(ProductModle)
+exports.delete = ApiFactory.deleteOne(ProductModle);

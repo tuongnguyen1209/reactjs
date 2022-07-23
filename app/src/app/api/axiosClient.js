@@ -1,7 +1,7 @@
-import { API_BASE_URL } from '@/config/appConfig'
-import { AUTH_TOKEN } from '@/constants/appConstants'
 import { notification } from 'antd'
 import axios from 'axios'
+import { API_BASE_URL } from 'src/config/appConfig'
+import { AUTH_TOKEN } from 'src/constants/appConstants'
 
 const createAxios = () => {
 	const instance = axios.create({
@@ -13,7 +13,7 @@ const createAxios = () => {
 		(config) => {
 			const token = localStorage.getItem(AUTH_TOKEN)
 			if (token) {
-				config.headers['Authorization'] = token
+				config.headers['Authorization'] = `Bearer ${token}`
 			}
 			return config
 		},
@@ -30,9 +30,10 @@ const createAxios = () => {
 			return response
 		},
 		(error) => {
+			console.log()
 			notification.error({
 				message: `Have some Error`,
-				description: error.message,
+				description: error.response.data?.message || error.message,
 			})
 			Promise.reject(error)
 		}
